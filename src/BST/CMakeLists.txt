@@ -1,0 +1,1 @@
+add_executable(BST_test BST_test.cpp)

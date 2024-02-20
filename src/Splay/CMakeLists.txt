@@ -1,0 +1,1 @@
+add_executable(Splay_test Splay_test.cpp)

@@ -1,0 +1,1 @@
+add_executable(BinTree_test BiTree_test.cpp)
