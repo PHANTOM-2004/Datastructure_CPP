@@ -85,7 +85,7 @@ int main() {
     }
     printBT(&test1);
     std::cout << "root : " << test1.root()->data << '\n';
-    test1.root()->left->zag();
+    test1.root()->lChild()->zag();
     // test1.root()->zag();
     printBT(&test1);
     msg("zag", 0);
@@ -104,7 +104,7 @@ int main() {
     }
     printBT(&test1);
     std::cout << "root : " << test1.root()->data << '\n';
-    test1.root()->right->zig();
+    test1.root()->rChild()->zig();
     // test1.root()->zag();
     printBT(&test1);
     msg("zig", 0);
@@ -125,10 +125,10 @@ int main() {
     std::cout << "root : " << test1.root()->data << '\n';
     // BiTNode<int>::stretchByZag(test1.root()->left);
 #if 1
-    test1.stretchByZag(test1.root()->left);
+    test1.stretchByZag(test1.root()->lChild());
     // test1.root()->zag();
     printBT(&test1);
-    test1.stretchByZig(test1.root()->right);
+    test1.stretchByZig(test1.root()->rChild());
     printBT(&test1);
 
     test1.stretchByZag(test1.fromroot());

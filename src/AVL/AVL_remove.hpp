@@ -8,7 +8,7 @@ bool AVL<T>::remove(const T& e) {
   this->erase(this->_hot, x);
   this->_size--;
 
-  for (BPtr<T> g = this->_hot; g != nullptr; g = g->parent) {
+  for (BPtr<T> g = this->_hot; g != nullptr; g = g->Parent()) {
     if (AVLBalanced(g) == false) {
       BPtr<T>& p = BinTree<T>::FromParentTo(g);
       p = this->rotateAt(tallerChild(tallerChild(g)));

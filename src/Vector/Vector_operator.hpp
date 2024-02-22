@@ -8,7 +8,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& src) {
 }
 
 template <typename T>
-Vector<T>& Vector<T>::operator=(Vector<T>&& src) noexcept{
+Vector<T>& Vector<T>::operator=(Vector<T>&& src) noexcept {
   elem = src.elem;
   __size = src.__size;
   __capacity = src.__capacity;

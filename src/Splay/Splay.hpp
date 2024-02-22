@@ -5,9 +5,10 @@ namespace CYT_DSA {
 template <typename T>
 class Splay : public BST<T> {
  public:
-  virtual BPtr<T>& search(const T& e);
-  virtual BPtr<T> insert(const T& e);
-  virtual bool remove(const T& e);
+  BPtr<T>& search(const T& e) override;
+  BPtr<T> insert(const T& e) override;
+  bool remove(const T& e) override;
+
  protected:
   BPtr<T> splay(BPtr<T> v);
 };

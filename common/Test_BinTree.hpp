@@ -23,12 +23,12 @@ std::vector<CYT_DSA::BPtr<T>> inorderTraversal(CYT_DSA::BPtr<T> root) {
   while (root != nullptr || !stk.empty()) {
     while (root != nullptr) {
       stk.push(root);
-      root = root->left;
+      root = root->lChild();
     }
     root = stk.top();
     stk.pop();
     res.push_back(root);
-    root = root->right;
+    root = root->rChild();
   }
   return res;
 }
@@ -36,7 +36,9 @@ std::vector<CYT_DSA::BPtr<T>> inorderTraversal(CYT_DSA::BPtr<T> root) {
 template <typename T>
 void printTree(const CYT_DSA::BPtr<T> root) {
   if (!root) return;
-
+#ifdef __MYDSA__RBTREE_IMPL__
+  std::cout << "---RBTree---\n";
+#endif
   using namespace CYT_DSA;
   const auto tmp = root;
   std::vector<BPtr<T>> intv = inorderTraversal(tmp);  // 中序遍历节点数组
@@ -46,7 +48,12 @@ void printTree(const CYT_DSA::BPtr<T> root) {
       first_locations;  // 存储节点对应在本行string中的首位置
   for (const auto &i : intv) {
     location = (int)template_str.size();
-    template_str += std::to_string(i->data) + " ";
+    std::string extra = " ";
+#ifdef __MYDSA__RBTREE_IMPL__
+    extra += i->color() == RBcolor::red ? "R" : "B";
+    extra += std::to_string(i->Height());
+#endif
+    template_str += std::to_string(i->data) + extra;
     first_locations[i] = location;
   }
   for (auto &i : template_str) i = ' ';  // 把模板全部置为空格方便后续使用
@@ -63,10 +70,14 @@ void printTree(const CYT_DSA::BPtr<T> root) {
       q.pop();
       cur_loc = first_locations[node];
       std::string num_str = std::to_string(node->data);
+#ifdef __MYDSA__RBTREE_IMPL__
+      num_str += node->color() == RBcolor::red ? "R" : "B";
+      num_str += std::to_string(node->Height());
+#endif
       // 左边，如果存在左孩子，那么在第二行对应位置打印'/'，在第一行补上'_'
-      if (node->left) {
-        q.push(node->left);
-        int first_loc = first_locations[node->left] + 1;
+      if (node->lChild()) {
+        q.push(node->lChild());
+        int first_loc = first_locations[node->lChild()] + 1;
         tmp_str2[first_loc++] = '/';
         while (first_loc < cur_loc) tmp_str1[first_loc++] = '_';
       }
@@ -75,9 +86,9 @@ void printTree(const CYT_DSA::BPtr<T> root) {
         tmp_str1[cur_loc] = num_str[j];
       }
       // 右边，如果存在右孩子，那么在第二行对应位置打印'\'，在第一行补上'_'
-      if (node->right) {
-        q.push(node->right);
-        int last_loc = first_locations[node->right] - 1;
+      if (node->rChild()) {
+        q.push(node->rChild());
+        int last_loc = first_locations[node->rChild()] - 1;
         tmp_str2[last_loc] = '\\';
         while (cur_loc < last_loc) {
           tmp_str1[cur_loc++] = '_';
@@ -94,10 +105,11 @@ template <typename T>
 BinNodePosi<T> randomPosiInBinTree(BinNodePosi<T> root) {
   if (!HasChild(root)) return root;
   if (!HasLChild(root))
-    return dice(6) ? randomPosiInBinTree(root->right) : root;
-  if (!HasRChild(root)) return dice(6) ? randomPosiInBinTree(root->left) : root;
-  return dice(2) ? randomPosiInBinTree(root->left)
-                 : randomPosiInBinTree(root->right);
+    return dice(6) ? randomPosiInBinTree(root->rChild()) : root;
+  if (!HasRChild(root))
+    return dice(6) ? randomPosiInBinTree(root->lChild()) : root;
+  return dice(2) ? randomPosiInBinTree(root->lChild())
+                 : randomPosiInBinTree(root->rChild());
 }
 
 // 随机生成期望高度为h的二叉树

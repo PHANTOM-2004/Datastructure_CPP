@@ -1,6 +1,8 @@
+#include <climits>
 #include <cmath>
 #include <iostream>
 #include <string>
+#include <climits>
 
 #include "Bitmap.hpp"
 #include "Bitmap_testcase.hpp"

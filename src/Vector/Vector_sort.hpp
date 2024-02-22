@@ -1,5 +1,5 @@
 #pragma once
-#include "../PQ_CompleteHeap/PQ_CompleteHeap.hpp"
+#include "PQ_CompleteHeap/Heap_build.hpp"
 
 namespace CYT_DSA {
 template <typename T>
@@ -84,10 +84,10 @@ template <typename T>
 void Vector<T>::heapSort(rank low, rank high) {
   rank n = high - low;
   T* A = elem + low;
-  PQ_CH<T>::heapify(A, n);
+  HeapBuild<T>::heapify(A, n);
   while (--n) {
     std::swap(A[0], A[n]);
-    PQ_CH<T>::percolateDown(A, 0, n);
+    HeapBuild<T>::percolateDown(A, 0, n);
   }
 }
 

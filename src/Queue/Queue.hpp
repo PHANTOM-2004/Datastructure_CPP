@@ -1,5 +1,5 @@
 #pragma once
-#include "List\List.hpp"
+#include "List/List.hpp"
 
 namespace CYT_DSA {
 template <typename T>

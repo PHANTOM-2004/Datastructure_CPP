@@ -5,7 +5,7 @@ namespace CYT_DSA {
 template <typename T>
 static int remove_subtree(BPtr<T> x) {
   if (x == nullptr) return 0;
-  int res = 1 + remove_subtree(x->left) + remove_subtree(x->right);
+  int res = 1 + remove_subtree(x->lChild()) + remove_subtree(x->rChild());
   delete x;
   return res;
 }

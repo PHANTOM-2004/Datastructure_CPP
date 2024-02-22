@@ -31,16 +31,16 @@ BPtr<T> BiTNode<T>::succ() const {
 template <typename T, typename func_type>
 static void in_traverse_R(BPtr<T> x, func_type& func) {
   if (x == nullptr) return;
-  in_traverse_R<T, func_type>(x->left, func);
+  in_traverse_R<T, func_type>(x->lChild(), func);
   func(x->data);
-  in_traverse_R<T, func_type>(x->right, func);
+  in_traverse_R<T, func_type>(x->rChild(), func);
 }
 
 template <typename T>
 static void GoAlongVine(BPtr<T> x, Stack<BPtr<T>>& stk) {
   while (x != nullptr) {
     stk.push(x);
-    x = x->left;
+    x = x->lChild();
   }
 }
 
@@ -52,7 +52,7 @@ static void in_traverse_I1(BPtr<T> x, func_type& func) {
     if (S.empty()) break;
     x = S.pop();
     func(x->data);
-    x = x->right;
+    x = x->rChild();
   }
 }
 
@@ -62,11 +62,11 @@ static void in_traverse_I2(BPtr<T> x, func_type& func) {
   while (true) {
     if (x != nullptr) {
       S.push(x);
-      x = x->left;
+      x = x->lChild();
     } else if (S.size()) {
       x = S.pop();
       func(x->data);
-      x = x->right;
+      x = x->rChild();
     } else
       break;
   }
@@ -77,10 +77,10 @@ static void in_traverse_I3(BPtr<T> x, func_type& func) {
   bool backtraced = false;
   while (true) {
     if (HasLChild(x) && backtraced == false) {
-      x = x->left;
+      x = x->lChild();
     } else if (HasRChild(x)) {
       func(x->data);
-      x = x->right;
+      x = x->rChild();
       backtraced = false;
     } else {
       func(x->data);
@@ -122,8 +122,8 @@ template <typename T, typename func_type>
 static void VisAlongVine(BPtr<T> x, func_type& func, Stack<BPtr<T>>& stk) {
   while (x != nullptr) {
     func(x->data);
-    stk.push(x->right);
-    x = x->left;
+    stk.push(x->rChild());
+    x = x->lChild();
   }
 }
 
@@ -136,8 +136,8 @@ static void pre_traverse_I1(BPtr<T> x, func_type& func) {
   while (stk.size()) {
     x = stk.pop();
     func(x->data);
-    if (HasRChild(x)) stk.push(x->right);
-    if (HasLChild(x)) stk.push(x->left);
+    if (HasRChild(x)) stk.push(x->rChild());
+    if (HasLChild(x)) stk.push(x->lChild());
   }
 }
 
@@ -156,8 +156,8 @@ template <typename T, typename func_type>
 static void pre_traverse_R(BPtr<T> x, func_type& func) {
   if (x == nullptr) return;
   func(x->data);
-  pre_traverse_R<T, func_type>(x->left, func);
-  pre_traverse_R<T, func_type>(x->right, func);
+  pre_traverse_R<T, func_type>(x->lChild(), func);
+  pre_traverse_R<T, func_type>(x->rChild(), func);
 }
 
 template <typename T>
@@ -202,10 +202,10 @@ static void gotoleftmost(Stack<BPtr<T>>& S) {
   x = S.top();
   while (x != nullptr) {
     if (HasLChild(x)) {
-      if (HasRChild(x)) S.push(x->right);
-      S.push(x = x->left);
+      if (HasRChild(x)) S.push(x->rChild());
+      S.push(x = x->lChild());
     } else {
-      S.push(x = x->right);
+      S.push(x = x->rChild());
     }
   }
   S.pop();
@@ -218,7 +218,7 @@ static void post_traverse_I1(BPtr<T> x, func_type& func) {
   Stack<BPtr<T>> stk;
   stk.push(x);
   while (!stk.empty()) {
-    if (x->parent != stk.top()) gotoleftmost(stk);
+    if (x->Parent() != stk.top()) gotoleftmost(stk);
     x = stk.pop();
     func(x->data);
   }
@@ -237,13 +237,13 @@ static void post_traverse_I2(BPtr<T> x, func_type& func) {
   while (stk.size() || x != nullptr) {
     GoAlongVine(x, stk);
     x = stk.pop();
-    if (x->right == nullptr || x->right == prev) {
+    if (x->rChild() == nullptr || x->rChild() == prev) {
       func(x->data);
       prev = x;
       x = nullptr;
     } else {
       stk.push(x);
-      x = x->right;
+      x = x->rChild();
     }
   }
 }
@@ -252,8 +252,8 @@ static void post_traverse_I2(BPtr<T> x, func_type& func) {
 template <typename T, typename func_type>
 static void post_traverse_R(BPtr<T> x, func_type& func) {
   if (x == nullptr) return;
-  post_traverse_R<T, func_type>(x->left, func);
-  post_traverse_R<T, func_type>(x->right, func);
+  post_traverse_R<T, func_type>(x->lChild(), func);
+  post_traverse_R<T, func_type>(x->rChild(), func);
   func(x->data);
 }
 

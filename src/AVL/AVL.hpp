@@ -6,12 +6,12 @@ namespace CYT_DSA {
 
 template <typename T>
 constexpr bool Balanced(const CBPtr<T> x) {
-  return stature(x->left) == stature(x->right);
+  return stature(x->lChild()) == stature(x->rChild());
 }
 
 template <typename T>
 constexpr int BalFac(const CBPtr<T> x) {
-  return stature(x->left) - stature(x->right);
+  return stature(x->lChild()) - stature(x->rChild());
 }
 
 template <typename T>
@@ -21,17 +21,18 @@ constexpr bool AVLBalanced(const CBPtr<T> x) {
 
 template <typename T>
 constexpr BPtr<T> tallerChild(const CBPtr<T> x) {
-  return stature(x->left) > stature(x->right)   ? x->left
-         : stature(x->left) < stature(x->right) ? x->right
-         : IsLChild(x)                          ? x->left
-                                                : x->right;
+  return stature(x->lChild()) > stature(x->rChild())   ? x->lChild()
+         : stature(x->lChild()) < stature(x->rChild()) ? x->rChild()
+         : IsLChild(x)                                 ? x->lChild()
+                                                       : x->rChild();
 }
 
 template <typename T>
 class AVL : public BST<T> {
  public:
-  virtual BPtr<T> insert(const T& e);  // 锟斤拷锟斤拷
-  virtual bool remove(const T& e);     // 删锟斤拷
+  BPtr<T> insert(const T& e) override;
+  bool remove(const T& e) override;
+
  protected:
 };
 

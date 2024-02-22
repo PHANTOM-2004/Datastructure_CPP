@@ -3,14 +3,14 @@
 namespace CYT_DSA {
 template <typename T>
 inline static void attachAsLChild(BPtr<T> p, BPtr<T> left) {
-  p->left = left;
-  if (left != nullptr) left->parent = p;
+  p->lChild() = left;
+  if (left != nullptr) left->Parent() = p;
 }
 
 template <typename T>
 inline static void attachAsRChild(BPtr<T> p, BPtr<T> right) {
-  p->right = right;
-  if (right != nullptr) right->parent = p;
+  p->rChild() = right;
+  if (right != nullptr) right->Parent() = p;
 }
 
 template <typename T>
