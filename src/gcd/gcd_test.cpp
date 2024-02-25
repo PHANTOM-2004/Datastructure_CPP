@@ -1,7 +1,7 @@
-#include "gcd.hpp"
+﻿#include "gcd.hpp"
 
-#include <iostream>
 #include <chrono>
+#include <iostream>
 using namespace CYT_DSA;
 
 constexpr bool show_ans = false;
@@ -52,5 +52,5 @@ int main() {
   const auto end = high_resolution_clock::now();
   const auto duration = duration_cast<microseconds>(end - begin);
   std::cout << (duration.count() * 1.0 / 1000000) << " seconds\n";
-  std::cout << "average : " << duration.count() * 1.0 / N / 2<< " us\n";
+  std::cout << "average : " << duration.count() * 1.0 / N / 2 << " us\n";
 }
