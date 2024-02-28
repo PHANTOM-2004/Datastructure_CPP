@@ -63,7 +63,7 @@ public:
   template <typename func_type> void traverse(const func_type p);
 
 protected:
-  static const rank VECTOR_DEFAULT_CAPACITY = 3;
+  static const rank VECTOR_DEFAULT_CAPACITY = 10;
   rank __size = 0;
   rank __capacity = VECTOR_DEFAULT_CAPACITY;
   T *elem = nullptr;
@@ -72,11 +72,13 @@ protected:
   void shrink();
   void selectionSort(rank low, rank high);
   void insertionSort(rank low, rank high);
+  void quickSort(rank low, rank high);
+  void quickSort_I(rank low, rank high);
   void mergeSort(rank low, rank high);
   void heapSort(rank low, rank high);
   // 约定这里是不重叠区间
   void merge(rank low, rank mid, rank high);
-
+  rank partition(rank low, rank high);
   rank binary_search(const T &elem, rank low, rank high) const;
   // void fibo_search(const T &elem, rank low, rank high) const;
 };

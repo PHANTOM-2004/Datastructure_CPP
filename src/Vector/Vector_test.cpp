@@ -1,7 +1,6 @@
 #include "Vector.hpp"
 
 #include <iostream>
-#include <vector>
 
 #include "TestCommon.hpp"
 
